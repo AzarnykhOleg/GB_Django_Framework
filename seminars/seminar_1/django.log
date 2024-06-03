@@ -1,0 +1,17 @@
+INFO 2024-06-03 20:03:33,870 autoreload 4612 13380 Watching for file changes with StatReloader
+INFO 2024-06-03 20:04:12,618 autoreload 4612 13380 D:\python\Geekbrain\Django\Django_Framework\seminars\seminar_1\seminar_1\settings.py changed, reloading.
+INFO 2024-06-03 20:04:46,955 autoreload 8048 8400 Watching for file changes with StatReloader
+INFO 2024-06-03 20:06:06,011 views 8048 13660 Index page accessed
+INFO 2024-06-03 20:06:06,011 basehttp 8048 13660 "GET / HTTP/1.1" 200 13
+INFO 2024-06-03 20:06:11,534 views 8048 13660 Cube page accessed
+INFO 2024-06-03 20:06:11,535 basehttp 8048 13660 "GET /cube/ HTTP/1.1" 200 25
+INFO 2024-06-03 20:06:14,082 views 8048 13660 Cube page accessed
+INFO 2024-06-03 20:06:14,083 basehttp 8048 13660 "GET /cube/ HTTP/1.1" 200 25
+INFO 2024-06-03 20:06:14,257 views 8048 13660 Cube page accessed
+INFO 2024-06-03 20:06:14,258 basehttp 8048 13660 "GET /cube/ HTTP/1.1" 200 25
+INFO 2024-06-03 20:06:33,995 views 8048 13660 Number page accessed
+INFO 2024-06-03 20:06:33,996 basehttp 8048 13660 "GET /number/ HTTP/1.1" 200 50
+WARNING 2024-06-03 20:06:45,588 log 8048 13660 Not Found: /cubes/
+WARNING 2024-06-03 20:06:45,588 basehttp 8048 13660 "GET /cubes/ HTTP/1.1" 404 2925
+INFO 2024-06-03 20:07:34,761 views 8048 13660 Cube page accessed
+INFO 2024-06-03 20:07:34,762 basehttp 8048 13660 "GET /cube/ HTTP/1.1" 200 25
