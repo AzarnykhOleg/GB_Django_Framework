@@ -1,0 +1,5 @@
+INFO 2024-06-04 12:31:56,096 autoreload Watching for file changes with StatReloader
+INFO 2024-06-04 12:32:05,794 basehttp "GET / HTTP/1.1" 200 1212
+INFO 2024-06-04 12:32:07,409 basehttp "GET /about/ HTTP/1.1" 200 1319
+WARNING 2024-06-04 12:32:15,759 log Not Found: /gb/
+WARNING 2024-06-04 12:32:15,759 basehttp "GET /gb/ HTTP/1.1" 404 2412
