@@ -11,7 +11,7 @@ def index(request):
         "content": "Приветствую на главной странцие",
     }
     logger.info("Index page accessed")
-    return render(request, "myapp/index.html", context)
+    return render(request, "hw1/index.html", context)
 
 
 def about(request):
@@ -19,4 +19,4 @@ def about(request):
         "title": "О себе",
     }
     logger.info("About page accessed")
-    return render(request, "myapp/about.html", context)
+    return render(request, "hw1/about.html", context)
