@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %} 
+    {{ title }} 
+{%endblock %} 
+
+{% block content %}
+    <div class="container">
+        <h1>{{ article.title}}</h1>
+        <h2>Автор статьи {{ article.author.full_name }}</h2>
+        <p>{{ article.text}}</p>
+        <p>Количество просмотров: {{ article.views }}</p>
+
+    </div>
+
+{% endblock %}

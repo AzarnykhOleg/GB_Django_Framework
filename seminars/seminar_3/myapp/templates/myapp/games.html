@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %} 
+    {{ title }} 
+{%endblock %} 
+
+{% block content %}
+    <div class="container">
+        {% for el in content  %}
+            {{ el }}
+        {% endfor %}
+    </div>
+
+{% endblock %}
