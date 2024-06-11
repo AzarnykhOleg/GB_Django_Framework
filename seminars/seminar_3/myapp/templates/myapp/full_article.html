@@ -10,6 +10,20 @@
         <h2>Автор статьи {{ article.author.full_name }}</h2>
         <p>{{ article.text}}</p>
         <p>Количество просмотров: {{ article.views }}</p>
+        <p>Категория статьи: {{ article.category }}</p>
+        <p>Дата публикации: {{ article.pub_date }}</p>
+        <h3>Комментарии:</h3>
+        {% if commets %} 
+            {% for comment in comments %}
+                <ul>
+                    <li>{{ comment.author.full_name }}</li>
+                    <li>{{ comment.comment }}</li>
+                    <li>{{ comment.update_date }}</li>
+                </ul>
+            {% endfor %}
+        {% else %}
+            <p>Комментариев пока нет</p>
+        {% endif %}
 
     </div>
 

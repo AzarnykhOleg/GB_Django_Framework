@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Author(models.Model):
     name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
@@ -25,3 +26,11 @@ class Article(models.Model):
 
     def add_view(self):
         self.views += 1
+
+
+class Comment(models.Model):
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    comment = models.TextField()
+    pub_date = models.DateField(auto_now_add=True)
+    update_date = models.DateField(auto_now_add=True)

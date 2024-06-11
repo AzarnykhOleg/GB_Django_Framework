@@ -1,7 +1,7 @@
 import logging
 import random
 from django.shortcuts import render, get_object_or_404
-from .models import Article, Author
+from .models import Article, Author, Comment
 
 
 logger = logging.getLogger(__name__)
@@ -45,11 +45,16 @@ def random_number(request, tryes: int):
     return render(request, "myapp/games.html", context)
 
 
-def articles(request, id_author: int):
-    author = Author.objects.filter(id=id_author).first()
-    arts = Article.objects.filter(author=author)
+def articles(request, id_author: int=None):
+    if id_author:
+        author = Author.objects.filter(id=id_author).first()
+        arts = Article.objects.filter(author=author)
+        title = f"Статьи автора: {author.full_name()}"
+    else:
+        arts = Article.objects.all()
+        title = "Все статьи"
     context = {
-        "title": f"Статьи автора: {author.full_name()}",
+        "title": title,
         "artcles_list": arts,
     }
     return render(request, "myapp/articles.html", context)
@@ -57,10 +62,12 @@ def articles(request, id_author: int):
 
 def full_article(request, id_article: int):
     article = get_object_or_404(Article, id=id_article)
+    comments = Comment.objects.filter(article=article).all()
     article.add_view()
     article.save()
     context = {
         "title": "Статья",
         "article": article,
+        "comments": comments,
         }
     return render(request, "myapp/full_article.html", context)
