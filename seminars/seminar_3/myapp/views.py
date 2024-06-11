@@ -62,7 +62,7 @@ def articles(request, id_author: int=None):
 
 def full_article(request, id_article: int):
     article = get_object_or_404(Article, id=id_article)
-    comments = Comment.objects.filter(article=article).all()
+    comments = Comment.objects.order_by('-update_date').filter(article=article).all()
     article.add_view()
     article.save()
     context = {
