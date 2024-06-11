@@ -1,7 +1,8 @@
 import logging
 import random
 from django.shortcuts import render, get_object_or_404
-from .models import Article, Author, Comment
+from .models import Article, Author, Client, Comment
+from .models import Client, Order, Product
 
 
 logger = logging.getLogger(__name__)
@@ -71,3 +72,21 @@ def full_article(request, id_article: int):
         "comments": comments,
         }
     return render(request, "myapp/full_article.html", context)
+
+
+def orders(request, client_id:int=None):
+    if client_id:
+        client = get_object_or_404(Client, id=client_id)
+        order = Order.objects.filter(buyer=client).all()
+        context = {
+            'title': f'Список заказов клиента {client.name}',
+            'client': client,
+            'orders': order
+            }
+    else:
+        order = Order.objects.all()
+        context = {
+            'title': f'Список всех заказов',
+            'orders': order
+            }
+    return render(request, 'myapp/orders.html', context)

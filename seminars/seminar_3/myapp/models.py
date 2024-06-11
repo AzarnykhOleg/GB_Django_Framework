@@ -1,4 +1,5 @@
 from django.db import models
+from decimal import Decimal
 
 
 class Author(models.Model):
@@ -36,10 +37,6 @@ class Comment(models.Model):
     update_date = models.DateField(auto_now_add=True)
 
 
-from decimal import Decimal
-from django.db import models
-
-
 class Client(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
@@ -65,7 +62,7 @@ class Product(models.Model):
 class Order(models.Model):
     buyer = models.ForeignKey(Client, on_delete=models.CASCADE)
     order = models.ManyToManyField(Product)
-    total_amount = models.DecimalField(max_digits=100, decimal_places=2)
+    total_amount = models.DecimalField(max_digits=100, decimal_places=2, default=0)
     order_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %} 
+    {{ title }} 
+{%endblock %} 
+
+{% block content %}
+    <div class="container">
+        <h1>{{ title }}</h1>
+        
+        {% if client %}
+            
+            <p>{{ orders }}</p>
+                    
+        {% else %}
+            <ul>
+                {% for order in orders %} 
+                    <li>{{ order }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+
+{% endblock %}
