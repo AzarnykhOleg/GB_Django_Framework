@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from myapp.models import Client
+from hw3.models import Client
 
 
 class Command(BaseCommand):
