@@ -61,7 +61,7 @@ class Product(models.Model):
 
 class Order(models.Model):
     buyer = models.ForeignKey(Client, on_delete=models.CASCADE)
-    order = models.ManyToManyField(Product)
+    products = models.ManyToManyField(Product)
     total_amount = models.DecimalField(max_digits=100, decimal_places=2, default=0)
     order_date = models.DateTimeField(auto_now_add=True)
 
@@ -70,6 +70,7 @@ class Order(models.Model):
 
     def calculate_total(self):
         total = Decimal(0)
-        for product in self.order.all():
+        for product in self.products.all():
             total += product.price
         self.total_amount = total
+        self.save()

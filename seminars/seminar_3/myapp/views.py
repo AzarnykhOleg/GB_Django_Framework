@@ -77,16 +77,19 @@ def full_article(request, id_article: int):
 def orders(request, client_id:int=None):
     if client_id:
         client = get_object_or_404(Client, id=client_id)
-        order = Order.objects.filter(buyer=client).all()
+        order = Order.objects.filter(buyer=client)
+        
+        
+        
         context = {
             'title': f'Список заказов клиента {client.name}',
             'client': client,
-            'orders': order
+            'order': order
             }
     else:
         order = Order.objects.all()
         context = {
             'title': f'Список всех заказов',
-            'orders': order
+            'order': order
             }
     return render(request, 'myapp/orders.html', context)

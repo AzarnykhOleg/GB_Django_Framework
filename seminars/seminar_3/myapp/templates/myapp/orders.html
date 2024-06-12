@@ -6,19 +6,33 @@
 
 {% block content %}
     <div class="container">
-        <h1>{{ title }}</h1>
-        
-        {% if client %}
-            
-            <p>{{ orders }}</p>
-                    
-        {% else %}
+    <h1>{{ title }}</h1>
+    
+    {% if client %}
+        {% for ord in order  %}
+            <p>Products in Order:</p>
             <ul>
-                {% for order in orders %} 
-                    <li>{{ order }}</li>
+                {% for product in ord.products.all %}
+                    <li>{{ product.title }} - {{ product.price }}$</li>
                 {% endfor %}
             </ul>
-        {% endif %}
-    </div>
+            <p>Total Amount: {{ ord.total_amount }}$</p>
+            <p>Order Date: {{ ord.order_date }}</p>
+            <hr>
+            <br>
+        {% endfor %}
+                
+    {% else %}
+        <ul>
+            {% for ord in order %} 
+                <h3>Order by {{ ord.buyer }}</h3>
+                <li>Total Amount: {{ ord.total_amount }}$</li>
+                <li>Order Date: {{ ord.order_date }}</li>
+                <hr>
+                <br>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>
 
 {% endblock %}
