@@ -11,6 +11,9 @@ class Author(models.Model):
 
     def full_name(self):
         return f"{self.name} {self.last_name}"
+    
+    def __str__(self) -> str:
+        return f"{self.name} {self.last_name}"
 
 
 class Article(models.Model):

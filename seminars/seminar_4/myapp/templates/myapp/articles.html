@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %} 
+    {{ title }} 
+{%endblock %} 
+
+{% block content %}
+    <div class="container">
+        <H1>{{ title }}</H1>
+        
+        {% for article in artcles_list  %}
+                {% if  article.is_published%}
+                    <h2>Название статьи: <a href="">{{ article.title }} </a></h2>
+                {% else %}
+                    <h2>Название статьи: {{ article.title }}</h2>
+                {% endif %}
+            <p>{{ article.text|truncatechars:5 }}</p>
+            <p>Дата публикации: {{ article.pub_date }}</p>
+        {% endfor %}
+    </div>
+
+{% endblock %}

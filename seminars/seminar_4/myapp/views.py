@@ -1,8 +1,8 @@
 import logging
 import random
-from django.shortcuts import render
-from .models import Author
-from .forms import GameForm, AuthorForm
+from django.shortcuts import redirect, render
+from .models import Article, Author
+from .forms import GameForm, AuthorForm, ArticleForm
 
 
 
@@ -60,7 +60,7 @@ def add_author(request):
         form = AuthorForm(request.POST)
         if form.is_valid():
             form_data = form.cleaned_data
-            author = Author.objects.create(
+            Author.objects.create(
                 name=form_data['name'],
                 last_name=form_data['last_name'],
                 email=form_data['email'],
@@ -74,3 +74,34 @@ def add_author(request):
     return render(request, 'myapp/authors.html', context)
 
 
+def articles(request, id_author: int=None):
+    if id_author:
+        author = Author.objects.filter(id=id_author).first()
+        arts = Article.objects.filter(author=author)
+        title = f"Статьи автора: {author.full_name()}"
+    else:
+        arts = Article.objects.all()
+        title = "Все статьи"
+    context = {
+        "title": title,
+        "artcles_list": arts,
+    }
+    return render(request, "myapp/articles.html", context)
+
+def add_article(request):
+    if request.method == "POST":
+        form = ArticleForm(request.POST)
+        if form.is_valid():
+            form_data = form.cleaned_data
+            Article.objects.create(
+                title = form_data['title'],
+                text = form_data['text'],
+                author = form_data['author'],
+                category = form_data['category'],
+                is_published = form_data['is_published'],
+            )
+            return redirect('articles')
+    else:
+        form = ArticleForm()
+    context= {'title': 'Добавить статью', 'form': form}
+    return render(request, 'myapp/add_article.html', context)

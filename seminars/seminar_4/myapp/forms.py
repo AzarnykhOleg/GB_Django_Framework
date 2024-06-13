@@ -22,10 +22,6 @@ class AuthorForm(forms.Form):
 class ArticleForm(forms.Form):
     title = forms.CharField()
     text = forms.CharField(widget=forms.Textarea)
-    pub_date = forms.DateField(
-        initial=datetime.date.today, attrs={"class": "form-control", "type": "date"}
-    )
     author = forms.ModelChoiceField(queryset=Author.objects.all())
     category = forms.CharField()
-    views = forms.IntegerField(initial=0)
     is_published = forms.BooleanField(initial=False)
