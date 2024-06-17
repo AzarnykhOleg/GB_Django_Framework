@@ -51,6 +51,7 @@ class ProductForm(forms.Form):
         max_digits=100,
         decimal_places=2,
         initial=0,
+        min_value=0,
         widget=forms.NumberInput(
             attrs={"class": "form-control", "placeholder": "Введите цену"}
         ),
