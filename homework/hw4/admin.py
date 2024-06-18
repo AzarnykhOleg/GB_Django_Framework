@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Product, Order, Client
+from .admin_mixins import ExportAsCSVMixin
 
 
 @admin.action(description="Сменить имя на Secret")
@@ -83,13 +84,14 @@ class ProductAdmin(admin.ModelAdmin):
     ]
 
 @admin.register(Order)
-class OrderAdmin(admin.ModelAdmin):
+class OrderAdmin(admin.ModelAdmin, ExportAsCSVMixin):
     list_display = ["buyer", "total_amount", "order_date"]
     ordering = ["order_date", "-total_amount"]
     list_filter = ["order_date"]
     search_fields = ["buyer"]
     search_help_text = "Поиск по Клиенту (buyer)"
     readonly_fields = ["order_date"]
+    actions = ['export_as_csv']
     fieldsets = [
         (
             None,
