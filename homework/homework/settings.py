@@ -151,7 +151,7 @@ LOGGING = {
         },
         "file": {
             "class": "logging.FileHandler",
-            "filename": "./log/django.log",
+            "filename": "django.log",
             "formatter": "verbose",  # добавлен параметр formatter
         },
     },

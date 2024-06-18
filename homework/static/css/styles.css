@@ -2,6 +2,7 @@
 .footer {
     left: 0;
     bottom: 0;
+    height: 50;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.05);
     text-align: center;
@@ -11,6 +12,7 @@
 
 /* Устанавливаем отступ для контента, чтобы он не залезал в футер */
 .content {
-    padding-bottom: 60px; /* Высота футера */
-    margin-bottom: 50px; /* Отступ снизу контента */
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 60px);
 }
