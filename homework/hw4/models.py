@@ -1,4 +1,5 @@
 from decimal import Decimal
+from django.core.validators import MinValueValidator
 from django.db import models
 
 
@@ -20,8 +21,8 @@ class Client(models.Model):
 class Product(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
-    price = models.DecimalField(max_digits=100, decimal_places=2, default=0)
-    quantity = models.PositiveIntegerField(default=0)
+    price = models.DecimalField(max_digits=100, decimal_places=2, default=0, validators=[MinValueValidator(0)])
+    quantity = models.PositiveIntegerField(default=0, validators=[MinValueValidator(0)])
     product_add_date = models.DateField(auto_now_add=True)
     product_image = models.ImageField(upload_to="product_images/", default=None)
 
@@ -36,7 +37,7 @@ class Product(models.Model):
 class Order(models.Model):
     buyer = models.ForeignKey(Client, on_delete=models.CASCADE)
     products = models.ManyToManyField(Product)
-    total_amount = models.DecimalField(max_digits=100, decimal_places=2, default=0)
+    total_amount = models.DecimalField(max_digits=100, decimal_places=2, default=0, validators=[MinValueValidator(0)])
     order_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
