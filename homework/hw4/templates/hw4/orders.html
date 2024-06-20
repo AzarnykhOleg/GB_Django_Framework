@@ -11,12 +11,22 @@
     {% if client %}
         {% for ord in order  %}
             <p>Products in Order:</p>
-            <ul>
+            <div class="d-flex flex-row mb-3 text-center">
+                
                 {% for product in ord.products.all %}
-                    <li>{{ product.title }} - {{ product.price }}$</li>
-                    <li><img class="img-thumbnail" src="{{ product.product_image.url }}" alt="{{ product.title }}" style="max-width: 100px; max-height: 100px;"></li>
+                <div class="p-3">
+                    <div class="card" style="width: 10rem;">
+                        {% if product.product_image %}
+                            <img class="img-thumbnail" src="{{ product.product_image.url }}" alt="{{ product.title }}" style="">
+                        {% endif %}
+                        <div class="card-body">
+                          <h5 class="card-title">{{ product.title }}</h5>
+                          <p class="card-text"> Price: {{ product.price }}$</p>
+                        </div>
+                    </div>
+                </div>
                 {% endfor %}
-            </ul>
+            </div>
             <p>Total Amount: {{ ord.total_amount }}$</p>
             <p>Order Date: {{ ord.order_date }}</p>
             <hr>

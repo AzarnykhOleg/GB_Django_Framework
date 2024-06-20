@@ -1,6 +1,7 @@
 from django import forms
 from .models import Client, Product
 
+
 # форма создания новго клиента
 class ClientForm(forms.Form):
     name = forms.CharField(
@@ -30,6 +31,7 @@ class ClientForm(forms.Form):
             attrs={"class": "form-control", "placeholder": "Введите адрес"}
         ),
     )
+
 
 # форма создания новго товара
 class ProductForm(forms.Form):
@@ -67,9 +69,16 @@ class ProductForm(forms.Form):
         widget=forms.FileInput(attrs={"class": "form-control", "type": "file"}),
     )
 
+
 # форма создания новго заказа
 class OrderForm(forms.Form):
-    buyer = forms.ModelChoiceField(queryset=Client.objects.all())
+    buyer = forms.ModelChoiceField(
+        queryset=Client.objects.all(),
+        label="Покупатель",
+        widget=forms.Select(attrs={"class": "form-control"}),
+    )
     products = forms.ModelMultipleChoiceField(
-        queryset=Product.objects.all(), widget=forms.CheckboxSelectMultiple
+        queryset=Product.objects.all(),
+        label="Товары",
+        widget=forms.CheckboxSelectMultiple,
     )
