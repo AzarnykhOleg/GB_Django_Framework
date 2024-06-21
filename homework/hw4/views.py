@@ -95,13 +95,14 @@ def add_product(request):
     context = {"title": "Добавить товар", "form": form}
     return render(request, "hw4/new_product.html", context)
 
-
+# обработка создания новго заказа (нужно переделать!)
 def add_order(request):
     if request.method == "POST":
         form = OrderForm(request.POST)
         if form.is_valid():
             buyer = form.cleaned_data["buyer"]
             prods = form.cleaned_data["products"]
+            quantities = quantities.clean_quantities()
             order = Order.objects.create(buyer=buyer)
             order.products.add(*prods)
             order.calculate_total()

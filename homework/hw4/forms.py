@@ -1,5 +1,5 @@
 from django import forms
-from .models import Client, Product
+from .models import Client, Product, OrderItem, Order
 
 
 # форма создания новго клиента
@@ -70,8 +70,8 @@ class ProductForm(forms.Form):
     )
 
 
-# форма создания новго заказа
-class OrderForm(forms.Form):
+# форма создания новго заказа (нужно переделать!)
+class OrderForm(forms.Form, forms.ModelForm):
     buyer = forms.ModelChoiceField(
         queryset=Client.objects.all(),
         label="Покупатель",
@@ -80,5 +80,13 @@ class OrderForm(forms.Form):
     products = forms.ModelMultipleChoiceField(
         queryset=Product.objects.all(),
         label="Товары",
-        widget=forms.CheckboxSelectMultiple,
+        widget=forms.SelectMultiple(attrs={"class": "form-control"}),
     )
+
+    class Meta:
+        model = OrderItem
+        fields = ["quantity"]
+
+        widgets = {
+            "quantity": forms.NumberInput(attrs={"class": "form-control"}),
+        }
