@@ -1,5 +1,6 @@
 from django import forms
 from .models import Client, Product, OrderItem, Order
+from django.forms import inlineformset_factory
 
 
 # форма создания новго клиента
@@ -70,23 +71,27 @@ class ProductForm(forms.Form):
     )
 
 
-# форма создания новго заказа (нужно переделать!)
-class OrderForm(forms.Form, forms.ModelForm):
-    buyer = forms.ModelChoiceField(
-        queryset=Client.objects.all(),
-        label="Покупатель",
-        widget=forms.Select(attrs={"class": "form-control"}),
-    )
-    products = forms.ModelMultipleChoiceField(
-        queryset=Product.objects.all(),
-        label="Товары",
-        widget=forms.SelectMultiple(attrs={"class": "form-control"}),
-    )
-
+class OrderItemForm(forms.ModelForm):
     class Meta:
         model = OrderItem
-        fields = ["quantity"]
-
+        fields = ["product", "quantity"]
+        labels = {"product": "Товар", "quantity": "Количество товара"}
         widgets = {
+            "product": forms.Select(attrs={"class": "form-control"}),
             "quantity": forms.NumberInput(attrs={"class": "form-control"}),
         }
+
+
+# форма создания новго заказа (нужно переделать!)
+class OrderForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ["buyer"]
+        labels = {"buyer": "Покупатель"}
+        widgets = {
+            "buyer": forms.Select(attrs={"class": "form-control"}),
+        }
+
+    OrderItemFormSet = inlineformset_factory(
+        Order, OrderItem, form=OrderItemForm, extra=3
+    )

@@ -1,12 +1,12 @@
-from http import client
 import logging
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from datetime import timedelta
 
-from .forms import ClientForm, ProductForm, OrderForm
+from .forms import ClientForm, ProductForm, OrderForm, OrderItem, OrderItemForm
 from .models import Order, Client, Product
 from django.core.files.storage import FileSystemStorage
+from django.forms import inlineformset_factory
 
 
 logger = logging.getLogger(__name__)
@@ -95,19 +95,24 @@ def add_product(request):
     context = {"title": "Добавить товар", "form": form}
     return render(request, "hw4/new_product.html", context)
 
+
 # обработка создания новго заказа (нужно переделать!)
 def add_order(request):
     if request.method == "POST":
         form = OrderForm(request.POST)
         if form.is_valid():
-            buyer = form.cleaned_data["buyer"]
-            prods = form.cleaned_data["products"]
-            quantities = quantities.clean_quantities()
-            order = Order.objects.create(buyer=buyer)
-            order.products.add(*prods)
-            order.calculate_total()
-            order.save()
-            return redirect("index")
+            new_order = form.save(commit=False)
+            formset = inlineformset_factory(
+                Order, OrderItem, form=OrderItemForm, extra=3
+            )
+            formset = formset(request.POST, instance=new_order)
+        
+            
+            if formset.is_valid():
+                new_order.save()
+                formset.save()
+                new_order.calculate_total()
+                return redirect("index")
     else:
         form = OrderForm()
     context = {"title": "Сделать заказ", "form": form}

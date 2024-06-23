@@ -20,7 +20,7 @@ class ClientAdmin(admin.ModelAdmin):
     list_filter = ["address", "register_date"]
     search_fields = ["name"]
     search_help_text = "Поиск по имени (name)"
-    readonly_fields = ["register_date"]
+    # readonly_fields = ["register_date"]
     actions = [reset_name]
     fieldsets = [
         (
