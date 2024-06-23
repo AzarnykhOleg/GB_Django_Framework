@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Order, Client
+from .models import Product, Order, Client, OrderItem
 from .admin_mixins import ExportAsCSVMixin
 
 
@@ -20,7 +20,7 @@ class ClientAdmin(admin.ModelAdmin):
     list_filter = ["address", "register_date"]
     search_fields = ["name"]
     search_help_text = "Поиск по имени (name)"
-    readonly_fields = ["register_date"]
+    # readonly_fields = ["register_date"]
     actions = [reset_name]
     fieldsets = [
         (
@@ -48,6 +48,7 @@ class ClientAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
+    
     list_display = ["title", "price", "quantity", "product_add_date"]
     ordering = ["title", "-price"]
     list_filter = ["price"]
@@ -82,11 +83,15 @@ class ProductAdmin(admin.ModelAdmin):
             },
         ),
     ]
+class OrderItemInline(admin.TabularInline):
+    model = OrderItem
+
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin, ExportAsCSVMixin):
+    inlines = [OrderItemInline]
     list_display = ["buyer", "total_amount", "order_date"]
-    ordering = ["order_date", "-total_amount"]
+    ordering = ["-order_date", "-total_amount"]
     list_filter = ["order_date"]
     search_fields = ["buyer"]
     search_help_text = "Поиск по Клиенту (buyer)"
@@ -98,13 +103,6 @@ class OrderAdmin(admin.ModelAdmin, ExportAsCSVMixin):
             {
                 "classes": ["wide"],  # будет занимать все доступное место на странице
                 "fields": ["buyer"],
-            },
-        ),
-        (
-            "Список товаров",
-            {
-                "classes": ["collapse"],
-                "fields": ["products"],
             },
         ),
         (
